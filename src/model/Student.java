@@ -3,6 +3,7 @@ package model;
 public class Student {
 	private String studentId;
 	private String studentName;
+//	private String branchId;
 	private Branch branch;
 	public Student() {
 		super();
