@@ -11,15 +11,15 @@ public class TestFacultyDAO {
 	public static void main(String[] args) {
 		FacultyDAO dao = new FacultyDAO();
 //		เพิ่มข้อมูล
-		Faculty faculty = new Faculty();
-		faculty.setFacultyId("00006");
-		faculty.setFacultyName("วิทยาการคอมพิวเตอร์");		
-		boolean result = dao.insert(faculty);
-		if(result){
-			JOptionPane.showMessageDialog(null, "เพิ่มข้อมูลในตารางคณะสำเร็จแล้ว");
-		}else{
-			JOptionPane.showMessageDialog(null, "เพิ่มข้อมูลในตารางคณะไม่สำเร็จ");
-		}
+//		Faculty faculty = new Faculty();
+//		faculty.setFacultyId("00006");
+//		faculty.setFacultyName("วิทยาการคอมพิวเตอร์");		
+//		boolean result = dao.insert(faculty);
+//		if(result){
+//			JOptionPane.showMessageDialog(null, "เพิ่มข้อมูลในตารางคณะสำเร็จแล้ว");
+//		}else{
+//			JOptionPane.showMessageDialog(null, "เพิ่มข้อมูลในตารางคณะไม่สำเร็จ");
+//		}
 		
 //		แสดงข้อมูล
 //		System.out.println("Before Update");
@@ -49,5 +49,6 @@ public class TestFacultyDAO {
 //			JOptionPane.showMessageDialog(null, "ลบข้อมูลในตารางคณะไม่สำเร็จ");
 //		}
 		
+		System.out.println(dao.genFacId());
 	}
 }

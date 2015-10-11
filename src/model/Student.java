@@ -3,8 +3,22 @@ package model;
 public class Student {
 	private String studentId;
 	private String studentName;
-//	private String branchId;
+	private String branchId;
+	public Student(String studentId, String studentName, String branchId) {
+		super();
+		this.studentId = studentId;
+		this.studentName = studentName;
+		this.branchId = branchId;
+	}
 	private Branch branch;
+	
+	public String getBranchId() {
+		return branchId;
+	}
+	public void setBranchId(String branchId) {
+		this.branchId = branchId;
+	}
+	
 	public Student() {
 		super();
 	}

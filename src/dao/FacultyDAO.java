@@ -90,4 +90,37 @@ public class FacultyDAO {
 		}
 		return facultys;
 	}
+	public String genFacId(){
+		String sid = null;
+		String sql = "select facultyId from faculty order by facultyId desc limit 1";
+		try {
+			PreparedStatement ps = MySQLHelper.openDB().prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()){
+				sid = rs.getString(1);
+				MySQLHelper.closeDB();
+				int tmp = Integer.parseInt(sid);
+				tmp++;
+				if(tmp<10){
+					sid = "0000" + tmp;
+				}else if(tmp<100){
+					sid = "000" + tmp;
+				}else if(tmp<1000){
+					sid = "00" + tmp;
+				}else if(tmp<10000){
+					sid = "0" + tmp;
+				}else{
+					sid = "" + tmp;
+				}
+				return sid;
+			}else{
+				return "00001";
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return sid;		
+	}
 }

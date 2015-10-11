@@ -6,6 +6,8 @@ public class Branch {
 	private String facultyId;
 	private Faculty faculty;
 	
+	
+	
 	public Branch(String branchId, String brachName, String facultyId) {
 		super();
 		this.branchId = branchId;
