@@ -6,6 +6,13 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
+import util.MySQLHelper;
+
 import javax.swing.UIManager;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -17,6 +24,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import java.awt.Frame;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 
@@ -24,6 +33,7 @@ public class MainMenus extends JFrame {
 
 	private JPanel contentPane;
 	private FacultyFrame facultyFrame;
+	private BranchFrame branchFrame;
 	private JDesktopPane desktopPane;
 
 	/**
@@ -78,6 +88,20 @@ public class MainMenus extends JFrame {
 		mntmFaculty.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		mnPrimary.add(mntmFaculty);
 		
+		JMenuItem mntmBranch = new JMenuItem("\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E2A\u0E32\u0E02\u0E32");
+		mntmBranch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(branchFrame==null || branchFrame.isClosed()){
+					branchFrame = new BranchFrame();
+					branchFrame.setVisible(true);
+					desktopPane.add(branchFrame);
+				}
+			}
+		});
+		mntmBranch.setIcon(new ImageIcon(MainMenus.class.getResource("/images16/drive_edit.png")));
+		mntmBranch.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		mnPrimary.add(mntmBranch);
+		
 		JMenu mnNewMenu_1 = new JMenu("New menu");
 		menuBar.add(mnNewMenu_1);
 		contentPane = new JPanel();
@@ -108,6 +132,25 @@ public class MainMenus extends JFrame {
 				System.exit(0);
 			}
 		});
+		
+		JButton btnPrint = new JButton("\u0E1E\u0E34\u0E21\u0E1E\u0E4C\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E04\u0E13\u0E30");
+		btnPrint.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String report = "reports/facultyReport.jasper";
+				Map map = new HashMap<>();
+				try {
+					JasperPrint jp = JasperFillManager.fillReport(report, map, MySQLHelper.openDB());
+					JasperViewer jv = new JasperViewer(jp, false);
+					jv.setVisible(true);
+				} catch (JRException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnPrint.setIcon(new ImageIcon(MainMenus.class.getResource("/images32/printer.png")));
+		btnPrint.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		toolBar.add(btnPrint);
 		btnExit.setIcon(new ImageIcon(MainMenus.class.getResource("/images32/cancel.png")));
 		btnExit.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		toolBar.add(btnExit);
