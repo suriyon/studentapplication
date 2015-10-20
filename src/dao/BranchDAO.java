@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Vector;
 
 import model.Branch;
-import model.Faculty;
 import util.MySQLHelper;
 
 public class BranchDAO {
@@ -75,7 +74,27 @@ public class BranchDAO {
 		}
 		return false;		
 	}
-	
+	public List<Branch> selectBranchByKey(String facultyId){
+		List<Branch> branches = new ArrayList<Branch>();
+		String sql = "select branchId, branchName from branch where facultyId = ?";
+		try {
+			PreparedStatement ps = MySQLHelper.openDB().prepareStatement(sql);
+			ps.setString(1, facultyId);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				Branch branch = new Branch();
+				branch.setBranchId(rs.getString(1));
+				branch.setBrachName(rs.getString(2));				
+				
+				branches.add(branch);
+			}
+			MySQLHelper.closeDB();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return branches;
+	}
 	public List<Branch> selectAll(){
 		List<Branch> branches = new ArrayList<Branch>();
 		String sql = "select * from branch";
@@ -139,6 +158,31 @@ public class BranchDAO {
 		String sql = "select * from branch";
 		try {
 			PreparedStatement ps = MySQLHelper.openDB().prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			ResultSetMetaData rsmd = rs.getMetaData();
+			int column = rsmd.getColumnCount();
+			while(rs.next()){
+				branch = new Vector<>();
+				for(int i=1;i<=column;i++){
+					branch.add(rs.getString(i));				
+				}
+				branches.add(branch);
+			}
+			MySQLHelper.closeDB();
+			return branches;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return branches;
+	}
+	public Vector selectBranchByName(String branchName){
+		Vector branches = new Vector<>();
+		Vector branch;
+		String sql = "select * from branch where branchName like ?";
+		try {
+			PreparedStatement ps = MySQLHelper.openDB().prepareStatement(sql);
+			ps.setString(1, "%" + branchName + "%");
 			ResultSet rs = ps.executeQuery();
 			ResultSetMetaData rsmd = rs.getMetaData();
 			int column = rsmd.getColumnCount();

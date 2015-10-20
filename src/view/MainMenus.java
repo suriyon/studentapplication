@@ -24,6 +24,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import java.awt.Frame;
 import java.awt.event.ActionListener;
+import java.beans.PropertyVetoException;
 import java.util.HashMap;
 import java.util.Map;
 import java.awt.event.ActionEvent;
@@ -34,6 +35,7 @@ public class MainMenus extends JFrame {
 	private JPanel contentPane;
 	private FacultyFrame facultyFrame;
 	private BranchFrame branchFrame;
+	private StudentFrame studentFrame;
 	private JDesktopPane desktopPane;
 
 	/**
@@ -82,6 +84,12 @@ public class MainMenus extends JFrame {
 					facultyFrame.setVisible(true);
 					desktopPane.add(facultyFrame);
 				}
+				try {
+					facultyFrame.setMaximum(true);
+				} catch (PropertyVetoException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		mntmFaculty.setIcon(new ImageIcon(MainMenus.class.getResource("/images16/application_home.png")));
@@ -96,14 +104,51 @@ public class MainMenus extends JFrame {
 					branchFrame.setVisible(true);
 					desktopPane.add(branchFrame);
 				}
+				try {
+					branchFrame.setMaximum(true);
+				} catch (PropertyVetoException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		mntmBranch.setIcon(new ImageIcon(MainMenus.class.getResource("/images16/drive_edit.png")));
 		mntmBranch.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		mnPrimary.add(mntmBranch);
 		
-		JMenu mnNewMenu_1 = new JMenu("New menu");
-		menuBar.add(mnNewMenu_1);
+		JMenuItem mntmStudent = new JMenuItem("\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E19\u0E31\u0E01\u0E28\u0E36\u0E01\u0E29\u0E32");
+		mntmStudent.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(studentFrame==null || studentFrame.isClosed()){
+					studentFrame = new StudentFrame();
+					studentFrame.setVisible(true);
+					desktopPane.add(studentFrame);
+				}
+				try {
+					studentFrame.setMaximum(true);
+				} catch (PropertyVetoException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		mntmStudent.setIcon(new ImageIcon(MainMenus.class.getResource("/images16/user.png")));
+		mntmStudent.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		mnPrimary.add(mntmStudent);
+		
+		JMenu mnPrint = new JMenu("\u0E1E\u0E34\u0E21\u0E1E\u0E4C\u0E23\u0E32\u0E22\u0E07\u0E32\u0E19");
+		mnPrint.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		menuBar.add(mnPrint);
+		
+		JMenuItem mntmPrintStudent = new JMenuItem("\u0E1E\u0E34\u0E21\u0E1E\u0E4C\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E19\u0E31\u0E01\u0E28\u0E36\u0E01\u0E29\u0E32");
+		mntmPrintStudent.setIcon(new ImageIcon(MainMenus.class.getResource("/images16/printer.png")));
+		mntmPrintStudent.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		mnPrint.add(mntmPrintStudent);
+		
+		JMenuItem mntmPrintFaculty = new JMenuItem("\u0E1E\u0E34\u0E21\u0E1E\u0E4C\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E04\u0E13\u0E30");
+		mntmPrintFaculty.setIcon(new ImageIcon(MainMenus.class.getResource("/images16/printer_add.png")));
+		mntmPrintFaculty.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		mnPrint.add(mntmPrintFaculty);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -119,6 +164,12 @@ public class MainMenus extends JFrame {
 					facultyFrame = new FacultyFrame();
 					facultyFrame.setVisible(true);
 					desktopPane.add(facultyFrame);
+				}
+				try {
+					facultyFrame.setMaximum(true);
+				} catch (PropertyVetoException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -148,6 +199,26 @@ public class MainMenus extends JFrame {
 				}
 			}
 		});
+		
+		JButton btnStudent = new JButton("\u0E08\u0E31\u0E14\u0E01\u0E32\u0E23\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E19\u0E31\u0E01\u0E28\u0E36\u0E01\u0E29\u0E32");
+		btnStudent.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(studentFrame==null || studentFrame.isClosed()){
+					studentFrame = new StudentFrame();
+					studentFrame.setVisible(true);
+					desktopPane.add(studentFrame);
+				}
+				try {
+					studentFrame.setMaximum(true);
+				} catch (PropertyVetoException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		btnStudent.setIcon(new ImageIcon(MainMenus.class.getResource("/images32/user.png")));
+		btnStudent.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		toolBar.add(btnStudent);
 		btnPrint.setIcon(new ImageIcon(MainMenus.class.getResource("/images32/printer.png")));
 		btnPrint.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		toolBar.add(btnPrint);

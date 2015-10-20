@@ -49,6 +49,7 @@ public class BranchFrame extends JInternalFrame {
 	private DefaultTableModel model;
 	
 	private List<Faculty> faculties;
+	private JTextField textSearch;
 
 	/**
 	 * Launch the application.
@@ -78,7 +79,7 @@ public class BranchFrame extends JInternalFrame {
 		setFrameIcon(new ImageIcon(BranchFrame.class.getResource("/images16/drive_edit.png")));
 		setClosable(true);
 		setTitle("Branch Management");
-		setBounds(100, 100, 572, 461);
+		setBounds(100, 100, 572, 545);
 		getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
@@ -207,6 +208,7 @@ public class BranchFrame extends JInternalFrame {
 				
 				addFacultyToComboBox();
 				addBranchId();
+				addDataToTable();
 				
 				textBranchName.setText("");
 				
@@ -223,13 +225,45 @@ public class BranchFrame extends JInternalFrame {
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(null, "\u0E41\u0E2A\u0E14\u0E07\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E2A\u0E32\u0E02\u0E32", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_2.setBounds(10, 221, 539, 199);
+		panel_2.setBounds(10, 307, 539, 199);
 		getContentPane().add(panel_2);
 		panel_2.setLayout(null);
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 26, 519, 162);
 		panel_2.add(scrollPane);
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setBorder(new TitledBorder(null, "\u0E04\u0E49\u0E19\u0E2B\u0E32\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E2A\u0E32\u0E02\u0E32", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_3.setBounds(10, 218, 536, 78);
+		getContentPane().add(panel_3);
+		panel_3.setLayout(null);
+		
+		JLabel lblNewLabel_3 = new JLabel("\u0E04\u0E49\u0E19\u0E2B\u0E32\u0E08\u0E32\u0E01\u0E0A\u0E37\u0E48\u0E2D\u0E2A\u0E32\u0E02\u0E32");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblNewLabel_3.setBounds(26, 34, 90, 14);
+		panel_3.add(lblNewLabel_3);
+		
+		textSearch = new JTextField();
+		textSearch.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		textSearch.setBounds(126, 29, 277, 25);
+		panel_3.add(textSearch);
+		textSearch.setColumns(10);
+		
+		JButton btnSearch = new JButton("\u0E04\u0E49\u0E19\u0E2B\u0E32");
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String branchName = textSearch.getText();
+				
+				addDataToTable(branchName);
+				
+				textSearch.setText("");
+			}
+		});
+		btnSearch.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnSearch.setIcon(new ImageIcon(BranchFrame.class.getResource("/images16/magnifier.png")));
+		btnSearch.setBounds(422, 26, 84, 30);
+		panel_3.add(btnSearch);
 
 		addFacultyToComboBox();
 		prepareTable(); 
@@ -244,10 +278,12 @@ public class BranchFrame extends JInternalFrame {
 	}
 
 	private void addFacultyToComboBox() {
+		if(cmbFaculty.getItemCount()>0)
+			cmbFaculty.removeAllItems();
 		FacultyDAO dao = new FacultyDAO();
 		faculties = new ArrayList<>();
 		faculties = dao.selectAll();
-		cmbFaculty.removeAllItems();
+		
 		for (Faculty faculty : faculties) {
 			cmbFaculty.addItem(new ComboBoxItem(
 					faculty.getFacultyId(), 
@@ -302,7 +338,20 @@ public class BranchFrame extends JInternalFrame {
 			model.addRow((Vector) data.get(i));
 		}
 	}
-
+	
+	private void addDataToTable(String branchName) {		
+		removeTable();
+		
+		BranchDAO dao = new BranchDAO();
+		Vector data = dao.selectBranchByName(branchName);
+		int row = data.size();
+		//System.out.println(row);
+		for(int i=0;i<row;i++){
+			model.addRow((Vector) data.get(i));
+			//System.out.println(data.get(i).toString());
+		}
+	}
+	
 	private void removeTable() {
 		if(table.getRowCount()>0){
 			int row = table.getRowCount();
