@@ -36,6 +36,7 @@ public class MainMenus extends JFrame {
 	private FacultyFrame facultyFrame;
 	private BranchFrame branchFrame;
 	private StudentFrame studentFrame;
+	private PrintFacultyFrame printFacultyFrame;
 	private JDesktopPane desktopPane;
 
 	/**
@@ -146,6 +147,21 @@ public class MainMenus extends JFrame {
 		mnPrint.add(mntmPrintStudent);
 		
 		JMenuItem mntmPrintFaculty = new JMenuItem("\u0E1E\u0E34\u0E21\u0E1E\u0E4C\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E04\u0E13\u0E30");
+		mntmPrintFaculty.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(printFacultyFrame==null || printFacultyFrame.isClosed()){
+					printFacultyFrame = new PrintFacultyFrame();
+					printFacultyFrame.setVisible(true);
+					desktopPane.add(printFacultyFrame);
+				}
+				try {
+					printFacultyFrame.setMaximum(true);
+				} catch (PropertyVetoException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 		mntmPrintFaculty.setIcon(new ImageIcon(MainMenus.class.getResource("/images16/printer_add.png")));
 		mntmPrintFaculty.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		mnPrint.add(mntmPrintFaculty);
